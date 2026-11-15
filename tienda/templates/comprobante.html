@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load precios %}
+
+{% block titulo %}Comprobante de pedido{% endblock %}
+
+{% block contenido %}
+
+<h2>¡Pedido realizado correctamente!</h2>
+
+<p>Tu pedido ha sido registrado para retiro en tienda.</p>
+
+<hr>
+
+<h3>Comprobante del pedido</h3>
+
+<p><strong>Código:</strong> {{ pedido.codigo }}</p>
+
+<p><strong>Juego:</strong> {{ pedido.juego.nombre }}</p>
+
+<p><strong>Cliente:</strong> {{ pedido.nombre_comprador }}</p>
+
+<p><strong>Correo:</strong> {{ pedido.correo_comprador }}</p>
+
+<p><strong>Teléfono:</strong> {{ pedido.telefono_comprador }}</p>
+
+<p><strong>Cantidad:</strong> {{ pedido.cantidad }}</p>
+
+<p><strong>Precio unitario:</strong>
+    {{ pedido.juego.precio|pesos_chilenos }}
+</p>
+
+<p><strong>Total:</strong>
+    {{ total|pesos_chilenos }}
+</p>
+
+<p><strong>Fecha del pedido:</strong>
+    {{ pedido.fecha_pedido|date:"d/m/Y H:i" }}
+</p>
+
+<hr>
+
+<a href="{% url 'tienda:inicio' %}">
+    Volver al catálogo
+</a>
+
+{% endblock %}
