@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load precios %}
+
+{% block titulo %}{{ juego.nombre }}{% endblock %}
+
+{% block contenido %}
+
+<h2>{{ juego.nombre }}</h2>
+
+{% if juego.imagen_caja %}
+    <img
+        src="{{ juego.imagen_caja.url }}"
+        alt="{{ juego.nombre }}"
+        width="300"
+    >
+{% endif %}
+
+<h3>Información del juego</h3>
+
+<p>Categoría: {{ juego.categoria.nombre }}</p>
+<p>Precio: {{ juego.precio|pesos_chilenos }}</p>
+<p>Jugadores: {{ juego.cantidad_jugadores }}</p>
+<p>Edad mínima: {{ juego.edad_minima }} años</p>
+<p>Stock disponible: {{ juego.stock }}</p>
+
+<hr>
+
+<h3>Realizar pedido</h3>
+
+{% if juego.stock > 0 %}
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ formulario.as_p }}
+
+        <button type="submit">
+            Realizar pedido
+        </button>
+    </form>
+
+    <p>El registro del pedido se habilitará próximamente.</p>
+
+{% else %}
+
+    <p class="agotado">
+        Este juego está agotado.
+    </p>
+
+{% endif %}
+
+<hr>
+
+<a href="{% url 'tienda:inicio' %}">
+    Volver al catálogo
+</a>
+
+{% endblock %}
