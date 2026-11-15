@@ -1,7 +1,8 @@
 from django.urls import path
+from . import views
 
 app_name = 'tienda'
 
 urlpatterns = [
-    # Las rutas se agregarán más adelante
+    path('', views.inicio, name='inicio'),
 ]

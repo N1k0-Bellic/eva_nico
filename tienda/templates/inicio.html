@@ -1,0 +1,66 @@
+
+{% extends 'base.html' %}
+
+{% block titulo %}Catálogo de juegos{% endblock %}
+
+{% block contenido %}
+
+<h2>Catálogo de juegos</h2>
+
+<form method="get">
+    <input
+        type="text"
+        name="buscar"
+        placeholder="Buscar por nombre"
+        value="{{ busqueda }}"
+    >
+
+    <select name="categoria">
+        <option value="">Todas las categorías</option>
+
+        {% for categoria in categorias %}
+            <option value="{{ categoria.id }}"
+                {% if categoria_seleccionada == categoria.id|stringformat:'s' %}
+                    selected
+                {% endif %}>
+                {{ categoria.nombre }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Buscar</button>
+    <a href="{% url 'tienda:inicio' %}">Limpiar</a>
+</form>
+
+<div class="juegos">
+    {% for juego in juegos %}
+        <article class="juego">
+
+            {% if juego.imagen_caja %}
+                <img
+                    src="{{ juego.imagen_caja.url }}"
+                    alt="Caja de {{ juego.nombre }}"
+                >
+            {% endif %}
+
+            <h3>{{ juego.nombre }}</h3>
+
+            <p>Categoría: {{ juego.categoria.nombre }}</p>
+
+            <p class="precio">
+                {{ juego.precio }}
+            </p>
+
+            {% if juego.stock == 0 %}
+                <p class="agotado">Agotado</p>
+            {% else %}
+                <p>Stock: {{ juego.stock }} unidades</p>
+            {% endif %}
+
+        </article>
+    {% empty %}
+        <p>No se encontraron juegos.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}
