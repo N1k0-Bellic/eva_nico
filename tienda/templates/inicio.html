@@ -1,5 +1,5 @@
-
 {% extends 'base.html' %}
+{% load precios %}
 
 {% block titulo %}Catálogo de juegos{% endblock %}
 
@@ -48,7 +48,7 @@
             <p>Categoría: {{ juego.categoria.nombre }}</p>
 
             <p class="precio">
-                {{ juego.precio }}
+                {{ juego.precio|pesos_chilenos }}
             </p>
 
             {% if juego.stock == 0 %}
